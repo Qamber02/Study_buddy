@@ -1,9 +1,6 @@
 import streamlit as st
 import os
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
 
 # Set page config as the very first Streamlit command
 st.set_page_config(
@@ -16,7 +13,15 @@ st.set_page_config(
 # CONFIGURATION - API KEY HANDLING
 # ================================
 # Try to get API key from environment variable first
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+import os
+
+try:
+    GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+except Exception:
+    from dotenv import load_dotenv
+    load_dotenv()
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
 # ================================
 
 import PyPDF2
